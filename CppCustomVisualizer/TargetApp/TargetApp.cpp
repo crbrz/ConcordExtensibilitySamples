@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <windows.h>
+#include <ATLComTime.h>
 
 class MyClass
 {
@@ -21,6 +22,7 @@ public:
 
 int wmain(int argc, WCHAR* argv[])
 {
+    /*
     FILETIME creationTime;
     HANDLE hFile = CreateFile(argv[0], GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, nullptr, OPEN_EXISTING, 0, nullptr);
     if (hFile == INVALID_HANDLE_VALUE)
@@ -34,6 +36,10 @@ int wmain(int argc, WCHAR* argv[])
     MyClass c(creationTime, 12);
 
     FILETIME FTZero = {};
+    */
+
+    COleDateTime dt(COleDateTime::GetCurrentTime());
+    COleDateTime* pDT = &dt;
 
     __debugbreak(); // program will stop here. Evaluate 'creationTime' and 'pPointerTest' in the locals or watch window.
     std::cout << "Test complete\n";

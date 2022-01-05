@@ -13,7 +13,7 @@ HRESULT STDMETHODCALLTYPE CCppCustomVisualizerService::EvaluateVisualizedExpress
 {
     HRESULT hr;
 
-    // This method is called to visualize a FILETIME variable. Its basic job is to create
+    // This method is called to visualize a COleDateTime variable. Its basic job is to create
     // a DkmEvaluationResult object. A DkmEvaluationResult is the data that backs a row in the
     // watch window -- a name, value, and type, a flag indicating if the item can be expanded, and
     // lots of other additional properties.
@@ -21,7 +21,7 @@ HRESULT STDMETHODCALLTYPE CCppCustomVisualizerService::EvaluateVisualizedExpress
     Evaluation::DkmPointerValueHome* pPointerValueHome = Evaluation::DkmPointerValueHome::TryCast(pVisualizedExpression->ValueHome());
     if (pPointerValueHome == nullptr)
     {
-        // This sample only handles visualizing in-memory FILETIME structures
+        // This sample only handles visualizing in-memory COleDateTime structures
         return E_NOTIMPL;
     }
 
@@ -34,7 +34,7 @@ HRESULT STDMETHODCALLTYPE CCppCustomVisualizerService::EvaluateVisualizedExpress
 
     // Read the FILETIME value from the target process
     DkmProcess* pTargetProcess = pVisualizedExpression->RuntimeInstance()->Process();
-    FILETIME value;
+    COleDateTime value;
     hr = pTargetProcess->ReadMemory(pPointerValueHome->Address(), DkmReadMemoryFlags::None, &value, sizeof(value), nullptr);
     if (FAILED(hr))
     {
@@ -42,13 +42,15 @@ HRESULT STDMETHODCALLTYPE CCppCustomVisualizerService::EvaluateVisualizedExpress
         return E_NOTIMPL;
     }
 
-    // Format this FILETIME as a string
-    CString strValue;
-    hr = FileTimeToText(value, /*ref*/strValue);
+    // Format this COleDateTime as a string
+    CString strValue = value.Format();    
+    //hr = FileTimeToText(value, /*ref*/strValue);
+    /*
     if (FAILED(hr))
     {
         strValue = "<Invalid Value>";
     }
+    */
 
     CString strEditableValue;
 

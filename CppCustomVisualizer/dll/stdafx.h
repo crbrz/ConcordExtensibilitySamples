@@ -22,6 +22,7 @@
 #include <atlbase.h>
 #include <atlcom.h>
 #include <atlctl.h>
+#include <ATLComTime.h>
 
 #include <vsdebugeng.h>
 #include <vsdebugeng.templates.h>
